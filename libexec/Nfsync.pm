@@ -30,7 +30,7 @@
 #
 #  $Id: Nfsync.pm 27 2011-12-29 12:53:29Z peter $
 #
-#  $LastChangedRevision: 27 $
+#  $LastChangedRevision: 28 $
 
 package Nfsync;
 
@@ -45,7 +45,8 @@ use IPC::SysV qw(IPC_RMID);
 my $semlock;
 
 sub seminit {
-	$semlock = semget(IPC_PRIVATE, 1, 0600 | IPC_CREAT ) || die "Can not get semaphore: $!";
+	$semlock = semget(IPC_PRIVATE, 1, 0600 | IPC_CREAT);
+	die "Can not get semaphore: $!" if($semlock < 0);
 	semsignal($semlock);
 } # End of seminit
 
